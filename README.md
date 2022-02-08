@@ -16,7 +16,7 @@ We first give some examples, the <a href="#installation">installation instructio
 
 We here provide three audio examples together with the code used to generate them. See the folder [examples/](examples/) for more detailed example notebooks. 
 
-*Note that the embedded mp4 video files that contain the audio in the following are by default muted. In Safari, I have to click play - pause - play to see the button that allows me to unmute.*
+*Note that the embedded mp4 video files that contain the audio in the following are by default muted.*
 
 ### Example 1: Added third on a distorted electric guitar
 
