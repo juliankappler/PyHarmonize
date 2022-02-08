@@ -1,0 +1,5 @@
+###### Requirements for PyHarmonize ######
+numpy
+scipy
+librosa
+soundfile
