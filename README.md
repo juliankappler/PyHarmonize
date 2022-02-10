@@ -1,4 +1,4 @@
-# PyHarmonize: Python module for adding harmony lines to recorded melodies
+# PyHarmonize: Adding harmony lines to recorded melodies in Python
 
 ## About
 
