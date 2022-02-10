@@ -6,7 +6,7 @@ To use this module, the user provides
 
 * a wav file containing a melody,
 * the key in which the melody is, and
-* the scale degree(s) of the harmony.
+* the scale degree(s) of the desired harmony.
 
 The module then outputs a wav file which contains the original melody, together with the added harmony line(s).
 
