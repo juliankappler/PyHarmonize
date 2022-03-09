@@ -49,7 +49,6 @@ class harmony_generator:
 		self.chromatic_scale_dictionary_inverse = { \
 					item:key for \
 		 			key,item in (self.chromatic_scale_dictionary).items() }
-
 		#
 		#
 		self.circle_of_fifths = self.get_circle_of_fifths(chromatic_scale = \
@@ -72,13 +71,21 @@ class harmony_generator:
 		# same notes as the major scale in C, and the note is reached by going
 		# up three semitones from A.
 		#
+		self.enharmonic_equivalents = {'Db':'C#',
+										'Eb':'D#',
+										'Gb':'F#',
+										'Fb':'E',
+										'Ab':'G#',
+										'Bb':'A#',
+										'Cb':'B'}
+		#
 		self.set_parameters(parameters=parameters)
 
 
 	def set_parameters(self,parameters={}):
 		'''
 		Change parameters of an existing instance of this class
-		''';
+		'''
 		#
 		try:
 			self.verbose = parameters['verbose']
@@ -110,6 +117,8 @@ class harmony_generator:
 		#
 		try:
 			self.key = parameters['key']
+			if 'b' in self.key:
+				self.key = self.get_enharmonic_equivalent(self.key)
 		except KeyError:
 			pass
 		#
@@ -118,6 +127,8 @@ class harmony_generator:
 		except KeyError:
 			pass
 		#
+		self.check_key_and_mode(key=self.key,mode=self.mode)
+		#
 		try:
 			self.scale_degrees = parameters['scale_degrees']
 		except KeyError:
@@ -125,6 +136,18 @@ class harmony_generator:
 		#
 		try:
 			self.semitones = parameters['semitones']
+		except KeyError:
+			pass
+		#
+		try:
+			self.scale_degrees_relative_amplitudes = \
+							parameters['scale_degrees_relative_amplitudes']
+		except KeyError:
+			pass
+		#
+		try:
+			self.semitones_relative_amplitudes = \
+							parameters['semitones_relative_amplitudes']
 		except KeyError:
 			pass
 		#
@@ -157,16 +180,45 @@ class harmony_generator:
 	def get_parameters(self):
 		'''
 		Return parameters
-		''';
-		#
-		# to do
-		return 0
+		'''
+		output_dictionary = {
+			'key':self.key,
+			'mode':self.mode,
+			'scale_degrees':self.scale_degrees,
+			'semitones':self.semitones,
+			'scale_degrees_relative_amplitudes':self.scale_degrees_relative_amplitudes,
+			'semitones_relative_amplitudes':self.semitones_relative_amplitudes ,
+			'signal_loaded':self.signal_loaded,
+			'sampling_rate_set':self.sampling_rate_set,
+			'time_series_with_pitches_created':self.time_series_with_pitches_created,
+			'verbose':self.verbose,
+			'input_filename':self.input_filename,
+			'sampling_rate':self.sr,
+			'output_filename':self.output_filename,
+			'channel':self.channel,
+			'stft_windows_per_second':self.stft_windows_per_second,
+			'project_non_scale_notes':self.project_non_scale_notes,
+			'dt_threshold_activate':self.dt_threshold_activate,
+			'dt_threshold_deactivate':self.dt_threshold_deactivate
+		}
+		return output_dictionary
 
+	def check_key_and_mode(self,key,mode):
+		'''
+		check if provided key and mode are valid
+		'''
+		#
+		if key not in self.chromatic_scale:
+			raise RuntimeError("Key not recognized. Please use one of the"\
+			+" following keys: {0}".format(self.chromatic_scale))
+		if mode not in self.mode_shifts.keys():
+			raise RuntimeError("Mode not recognized. Please use one of the"\
+			+" following modes: {0}".format(list(self.mode_shifts.keys())))
 
 	def get_circle_of_fifths(self,chromatic_scale):
 		'''
 		Construct circle of fifths from chromatic scale
-		''';
+		'''
 		circle_of_fifths = []
 		semitones_fifth = 7
 		for i in range(self.N_notes):
@@ -175,6 +227,16 @@ class harmony_generator:
 									)
 		return circle_of_fifths
 
+	def get_enharmonic_equivalent(self,key):
+		'''
+		For a key with a "b" (flat), return the
+		the corresponding key with a "#" (sharp)
+		'''
+		try:
+			return self.enharmonic_equivalents[key]
+		except KeyError:
+			raise RuntimeError("Key not recognized. Please use one of the"\
+				+" following keys: {0}".format(self.chromatic_scale))
 
 	def get_major_scale(self,
 						key='C'):
@@ -184,7 +246,7 @@ class harmony_generator:
 		For example, for key = 'C' the function returns a list
 			['C' , 'D', 'E', 'F', 'G', 'A', 'B']
 
-		''';
+		'''
 		#
 		# get position of current root note in circle of fifths
 		for i,current_note in enumerate(self.circle_of_fifths):
@@ -234,7 +296,7 @@ class harmony_generator:
 			- return_equivalent_major_scale = True the function returns
 				['C' , 'D', 'E', 'F', 'G', 'A', 'B']
 
-		''';
+		'''
 		#
 		# get key of equivalent major scale
 		# ("equivalent" here means "the scale contains the same notes")
@@ -312,12 +374,15 @@ class harmony_generator:
 			N_shifts = 2
 			shift_dictionary = {3: 0, 4: 1}.
 
-		''';
+		'''
 		#
 		if key is None:
 			key = self.key
+		if 'b' in key:
+			key = self.get_enharmonic_equivalent(key)
 		if mode is None:
 			mode = self.mode
+		self.check_key_and_mode(key=key,mode=mode)
 		#
 		scale = self.get_scale(key=key,
 							mode = mode,
@@ -376,7 +441,7 @@ class harmony_generator:
 		Load wav file
 
 		This function is basically a wrapper for SoundFile.read()
-		''';
+		'''
 		#
 		if filename is None:
 			if self.input_filename == 'not set':
@@ -412,7 +477,7 @@ class harmony_generator:
 		an array with the corresponding lowest frequency at which this
 		pitch appears
 
-		''';
+		'''
 		#
 		#
 		if self.signal_loaded == False:
@@ -466,7 +531,7 @@ class harmony_generator:
 							weight_power=1.):
 		'''
 		To Do: Add documentation
-		''';
+		'''
 		#
 		note_weights = np.zeros(self.N_notes,dtype=float)
 		#
@@ -496,7 +561,7 @@ class harmony_generator:
 						project_non_scale_notes=None):
 		'''
 		To Do: Add documentation
-		''';
+		'''
 		#
 		if project_non_scale_notes is None:
 			project_non_scale_notes = self.project_non_scale_notes
@@ -581,6 +646,7 @@ class harmony_generator:
 		return characteristic_functions
 
 
+
 	def add_harmonies(self,
 					key=None,
 					mode=None,
@@ -593,24 +659,46 @@ class harmony_generator:
 		#
 		'''
 		To Do: Add documentation
-		''';
+		'''
+		#
 		#
 		if key is None:
 			key = self.key
+		else:
+			if 'b' in key:
+				key = self.get_enharmonic_equivalent(key)
+		#
 		if mode is None:
 			mode = self.mode
+		#
+		self.check_key_and_mode(key=key,mode=mode)
+		#
 		if scale_degrees is None:
 			scale_degrees = self.scale_degrees
 		if semitones is None:
 			semitones = self.semitones
 		if scale_degrees_relative_amplitudes is None:
+			# if current self.scale_degrees_relative_amplitudes is inconsistent
+			# with provided semitones, update self.scale_degrees_relative_amplitudes
+			scale_degrees_relative_amplitudes = self.scale_degrees_relative_amplitudes
+			if len(scale_degrees_relative_amplitudes) != len(scale_degrees):
+				scale_degrees_relative_amplitudes = np.ones(len(scale_degrees))
+		else:
 			if len(self.scale_degrees_relative_amplitudes) != len(scale_degrees):
 				scale_degrees_relative_amplitudes = np.ones(len(scale_degrees))
+
 		if semitones_relative_amplitudes is None:
+			# if current self.semitones_relative_amplitudes is inconsistent
+			# with provided semitones, update self.scale_degrees_relative_amplitudes
+			semitones_relative_amplitudes = self.semitones_relative_amplitudes
+			if len(semitones_relative_amplitudes) != len(semitones):
+				semitones_relative_amplitudes = np.ones(len(semitones))
+		else:
 			if len(self.semitones_relative_amplitudes) != len(semitones):
 				semitones_relative_amplitudes = np.ones(len(semitones))
 		if verbose is None:
 			verbose = self.verbose
+		#
 		#
 		# load file
 		if self.signal_loaded == False:
