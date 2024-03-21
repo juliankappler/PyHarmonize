@@ -52,9 +52,10 @@ output_dictionary = harmony_generator.add_harmonies(scale_degrees = [3])
 
 In [this example](examples/guitar%20distorted%20-%20E%20major%20-%20example%202.ipynb) we add two harmony lines to an input signal. Here are the input signal and the result:
 
-https://user-images.githubusercontent.com/37583039/153067531-f237082f-3449-46b3-8528-bc1410881791.mp4
+https://github.com/juliankappler/PyHarmonize/assets/37583039/5201b28b-02b1-4faa-b9a2-0e8fbd8d156a
 
-https://user-images.githubusercontent.com/37583039/153067555-340320e4-9759-4019-8e35-2bdce7c6229b.mp4
+https://github.com/juliankappler/PyHarmonize/assets/37583039/06ab9648-8754-49e5-8e80-384222d8f1c2
+
 
 The [code for this example](examples/guitar%20distorted%20-%20E%20major%20-%20example%202.ipynb) is essentially the same as in the first example, except that now the list <i>scale_degrees</i> contains more than one element:
 
@@ -76,7 +77,9 @@ output_dictionary = harmony_generator.add_harmonies(scale_degrees = [3, 5]) # ad
 
 If we add some more octaves and thirds, we can generate a more synthesizer-like sound. Here is an example for that:
 
-https://user-images.githubusercontent.com/37583039/153067878-fa2d3d9e-2c5f-4bc9-b133-99574a63c8a5.mp4
+
+https://github.com/juliankappler/PyHarmonize/assets/37583039/9c139503-741a-426f-8972-b9af1bd1d572
+
 
 To generate this output, we pass <i>scale_degrees = [-8, -6, 3, 5, 8, 10]</i>, which adds pitch shifted signals an octave lower (-8), the third one octave lower (-6), a third up (3), a fifth up (5), an octave up (8), and a third an octave higher (10).
 
@@ -84,10 +87,16 @@ To generate this output, we pass <i>scale_degrees = [-8, -6, 3, 5, 8, 10]</i>, w
 
 In [this example](examples/guitar%20clean%20-%20A%20major.ipynb) we add thirds, fifths, and octaves to a melody in A major, which is played on a clean electric guitar. Here are input and output files:
 
-https://user-images.githubusercontent.com/37583039/153068671-23657df3-e2ac-4de9-bbf5-a57475e8c9f8.mp4
 
 
-https://user-images.githubusercontent.com/37583039/153068718-106ed015-4dac-4762-a033-ab8815c5d7ea.mp4
+
+https://github.com/juliankappler/PyHarmonize/assets/37583039/a98c056d-db0d-48ec-a343-e0e02f109a15
+
+
+
+https://github.com/juliankappler/PyHarmonize/assets/37583039/224e7457-1a8a-4e60-b20f-b194872e99d9
+
+
 
 
 The [code for generating this harmony](examples/guitar%20clean%20-%20A%20major.ipynb) is:
