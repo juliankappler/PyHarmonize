@@ -24,7 +24,8 @@ In [this example](examples/guitar%20distorted%20-%20E%20major%20-%20example%201.
 
 <video src='https://user-images.githubusercontent.com/37583039/153066178-24fec761-7809-4b3d-890a-dfe4ecd7f2f3.mp4' />
 
-https://user-images.githubusercontent.com/37583039/153066889-b353b151-7bb9-413c-92ae-6db3186da832.mp4
+<video src='https://user-images.githubusercontent.com/37583039/153066889-b353b151-7bb9-413c-92ae-6db3186da832.mp4' />
+
 
 And here is the code used to generate this output:
 
