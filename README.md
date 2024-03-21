@@ -22,9 +22,9 @@ We here provide three audio examples together with the code used to generate the
 
 In [this example](examples/guitar%20distorted%20-%20E%20major%20-%20example%201.ipynb) we add a harmony line a third above the input melody, which is played on a distorted electric guitar. Here are the input signal used, as well as the final result:
 
-<video src='https://user-images.githubusercontent.com/37583039/153066178-24fec761-7809-4b3d-890a-dfe4ecd7f2f3.mp4' />
+https://github.com/juliankappler/PyHarmonize/assets/37583039/91dd3f93-258b-46c6-b4b0-f3c3e9d0a450
 
-<video src='https://user-images.githubusercontent.com/37583039/153066889-b353b151-7bb9-413c-92ae-6db3186da832.mp4' />
+https://github.com/juliankappler/PyHarmonize/assets/37583039/f9778079-b2de-4a9d-85c2-da6e031d5816
 
 
 And here is the code used to generate this output:
